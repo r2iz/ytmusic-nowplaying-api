@@ -12,18 +12,19 @@ app.post('/', async (c) => {
   const query =  parsed.search;
 
   if (!query) {
-    return await c.res.json({ error: "No query found" });
+    return c.text("error: No query found");
   }
 
   const parsedQuery = await queryString.parse(query);
   if (!parsedQuery.v) {
-    return await c.res.json({ error: "No video id found" });
+    return c.text("error: No video id found");
   }
   try {
     const info = await getSuggestions(parsedQuery.v);
     const text = `${info[0]?.title ?? ''} / ${info[0].artists[0].name} `;
     return c.text(text);
   } catch (e) {
+    console.error(e);
     return await c.text("error: No video found");
   }
 });
