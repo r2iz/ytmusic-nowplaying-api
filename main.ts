@@ -21,7 +21,8 @@ app.post('/', async (c) => {
   try {
     const info = await getSuggestions(parsedQuery.v);
     const url = `https://music.youtube.com/watch?v=${parsedQuery.v}`
-    const text = `${info[0]?.title ?? ''} / ${info[0].artists[0].name}\n${url}`;
+    const artists = info[0].artists.map(artist => artist.name).join(' / ');
+    const text = `${info[0]?.title ?? ''} / ${artists}\n${url}`;
     return c.text(text);
   } catch (e) {
     console.error(e);
