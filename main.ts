@@ -30,4 +30,4 @@ app.post('/', async (c) => {
   }
 });
 
-Deno.serve({ port: config.port, hostname: config.hostname }, app.fetch);
+Deno.serve(app.fetch);
