@@ -2,7 +2,6 @@ import { Hono } from 'https://deno.land/x/hono@v4.1.1/mod.ts';
 import { getSuggestions } from "npm:node-youtube-music";
 import { urlParse } from "https://deno.land/x/url_parse/mod.ts";
 import * as queryString from "https://deno.land/x/querystring@v1.0.2/mod.js";
-import config from "./config.json" with { type: "json" };
 
 const app = new Hono();
 
