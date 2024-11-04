@@ -1,5 +1,5 @@
 import { Hono } from "https://deno.land/x/hono@v4.3.11/mod.ts";
-import { getSuggestions } from "npm:node-youtube-music";
+import YTMusic from "npm:ytmusic-api";
 import { urlParse } from "https://deno.land/x/url_parse/mod.ts";
 import * as queryString from "https://deno.land/x/querystring@v1.0.2/mod.js";
 
@@ -18,13 +18,12 @@ app.post("/", async (c) => {
     if (!parsedQuery.v) {
         return c.text("error: No video id found");
     }
+
     try {
-        const info = await getSuggestions(parsedQuery.v);
-        const url = `https://music.youtube.com/watch?v=${parsedQuery.v}`;
-        const artists = info[0].artists
-            .map((artist) => artist.name)
-            .join(" / ");
-        const text = `${info[0]?.title ?? ""}\n${artists}\n${url}`;
+        const ytmusic = new YTMusic();
+        await ytmusic.initialize();
+        const info = await ytmusic.getSong(parsedQuery.v as string);
+        const text = `Title: ${info.name}\nArtists: ${info.artist.name}\nDuration: ${info.duration}\nThumbnail: ${info.thumbnails[0].url}`;
         return c.text(text);
     } catch (e) {
         console.error(e);
