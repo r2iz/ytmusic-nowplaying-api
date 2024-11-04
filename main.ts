@@ -23,7 +23,8 @@ app.post("/", async (c) => {
         const ytmusic = new YTMusic();
         await ytmusic.initialize();
         const info = await ytmusic.getSong(parsedQuery.v as string);
-        const text = `Title: ${info.name}\nArtists: ${info.artist.name}\n}`;
+        const url = `https://music.youtube.com/watch?v=${parsedQuery.v}`;
+        const text = `Title: ${info.name}\nArtists: ${info.artist.name}\n${url}`;
         return c.text(text);
     } catch (e) {
         console.error(e);
