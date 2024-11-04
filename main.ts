@@ -23,7 +23,7 @@ app.post("/", async (c) => {
         const ytmusic = new YTMusic();
         await ytmusic.initialize();
         const info = await ytmusic.getSong(parsedQuery.v as string);
-        const text = `Title: ${info.name}\nArtists: ${info.artist.name}\nDuration: ${info.duration}\nThumbnail: ${info.thumbnails[0].url}`;
+        const text = `Title: ${info.name}\nArtists: ${info.artist.name}\n}`;
         return c.text(text);
     } catch (e) {
         console.error(e);
